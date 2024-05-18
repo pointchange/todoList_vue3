@@ -1,0 +1,84 @@
+:root {
+  /* 白 */
+  --theme-while: #fff;
+  --theme-mdn-bar-color: #f9f9fb;
+  --theme-gray: #eee;
+  --theme-very-gray: #ddd;
+  --theme-very-very-gray: #ccc;
+  /* 黑 */
+  --theme-black: #000;
+  --theme-little-black: #222;
+  --theme-little-little-black: #444;
+  --theme-not-like-black: #666;
+
+  /* 红 */
+  --theme-red: #ee4758;
+
+  /* 绿 */
+  --theme-green: limegreen;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+input,
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--theme-black);
+}
+
+@keyframes doAnimation {
+
+  0%,
+  100% {
+    /* transform: translateY(-10%); */
+    transform: rotateY(30deg);
+  }
+
+  50% {
+    /* transform: translateY(10%); */
+    transform: rotateY(-30deg);
+  }
+}
+
+@keyframes liAnimation {
+  0% {
+    left: 100%;
+    transform: translateX(0%);
+  }
+
+  100% {
+    left: 0%;
+    transform: translateX(-100%);
+  }
+
+}
