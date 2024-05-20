@@ -2,7 +2,8 @@
     <!-- @animationend="changeElementTop" -->
     <li :style="animationStyle" :class="{'li-active':isLiAcitive,'li-Done':isDone}"
     @animationiteration="changeElementTop"
-    @click.capture="clickHandler">
+    @click.capture="clickHandler"
+    >
         <div class="context" :style="changeFontSize">
             {{ context }}
         </div>
@@ -20,9 +21,9 @@
     </li>
 </template>
 <script setup>
-    import { computed, nextTick, onBeforeUnmount, onMounted,onUnmounted,reactive,ref } from 'vue';
+    import { computed,ref } from 'vue';
     import { usetodoListStore } from '@/store/todoList';
-    const props = defineProps(['id','context','isDone','date','getCoord'])
+    const props = defineProps(['id','context','isDone','date','getCoord','editHandler'])
     const store=usetodoListStore();
     const {deleteTodoHanler,changeIsDone}=store;
     //10-20
@@ -83,17 +84,11 @@
             return {fontSize:'5rem'}
         }
     })
-    let fourSecond=ref(0);
-
-    onBeforeUnmount(()=>{
-        // id.value=null;
-    })
-
-
     function changeElementTop(){
         animationStyle.value.animation=`liAnimation ${rand.value}s infinite linear`;
         animationStyle.value.top=`${Math.random()*100}%`;
     }
+    let timeId=ref(0);
     function clickHandler(e){
         isShowDeleteBtn.value=true;
         isLiAcitive.value=true;
@@ -102,18 +97,12 @@
         clearTimeout(id.value);
         id.value=null;
         id.value = setTimeout(()=>{
+            if(store.toEditing.focus) return;
             props.getCoord(`-10%`,`50%`)
-            animationStyle.value.animationPlayState='running';
-            isLiAcitive.value=false;
-            isShowDeleteBtn.value=false;
-            store.toEditing.focus=false;
+            editBlurEffect()
+            store.toEditing.blur=false;
         },4000);
-        // id.value=setInterval(() => {
-        //     if(fourSecond.value===4)return;
-        //     fourSecond.value++;
-        // }, 1000);
         
-
         props.getCoord(
             e.clientX,
             (e.target===e.currentTarget?e.clientY-e.offsetY:e.clientY-e.offsetY-e.target.offsetTop)+e.currentTarget.offsetHeight,
@@ -121,10 +110,29 @@
         )
         store.toEditing.id=props.id;
         store.toEditing.context=props.context;
+
+        timeId.value++;
+        setTimeout(function () {
+            if (timeId.value === 2) {
+                timeId.value = 0; 
+                changeIsDone(props.id);
+            }
+        }, 250)
         
         if(e.detail<2)return;
         changeIsDone(props.id);
     }
+
+    function editBlurEffect(){
+        // props.getCoord(`-10%`,`50%`)
+        animationStyle.value.animationPlayState='running';
+        isLiAcitive.value=false;
+        isShowDeleteBtn.value=false;
+    }
+    defineExpose({
+        editBlurEffect,
+        id:props.id,
+    });
 </script>
 <style scoped>
     li{

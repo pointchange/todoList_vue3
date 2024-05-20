@@ -3,17 +3,22 @@
         <input type="text"
         v-model="toEditing.context"
         @keyup.enter="editTodoHanler"
-        @focus="toEditing.focus=true"
-        @blur="toEditing.focus=false"
+        @focus="store.toEditing.focus=true"
+        @blur="blurHandler"
         >
     </div>
 </template>
 <script setup>
     import { usetodoListStore } from '@/store/todoList';
     import { storeToRefs } from 'pinia';
+    const props=defineProps(['editHandler']);
     const store=usetodoListStore();
     const {toEditing}=storeToRefs(store);
     const {editTodoHanler}=store;
+    function blurHandler(){
+        store.toEditing.focus=false;
+        props.editHandler();
+    }
 </script>
 <style scoped>
 .edit-container{
@@ -34,6 +39,6 @@
     font-size: 1rem;
     border-radius: 1rem;
     background-color: var(--theme-while);
-    box-shadow: 0 0 1rem var(--theme-very-gray);
+    color: var(--theme-black)
 }
 </style>

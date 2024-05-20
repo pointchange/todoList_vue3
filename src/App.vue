@@ -22,13 +22,13 @@
    </div>
   </header>
   <main :style="mainHeight">
-    <ul :style="mainHeight" >
-      <ListItem :getCoord="getCoord"
+    <ul>
+      <ListItem :getCoord="getCoord" :editHandler="editHandler" ref="ListItemRef"
        v-for="item in todoList" :key="item.id" v-bind="item" 
       />
     </ul>
   </main>
-  <Edit :style="editStyle" />
+  <Edit :style="editStyle" :editHandler="editHandler"/>
 </template>
 <script setup>
   import { nanoid } from 'nanoid';
@@ -41,11 +41,9 @@
   const store=usetodoListStore();
   const {todoList}=storeToRefs(store);
   const {addTodoHanler,clearDoneHanler}=store;
-
   const header=ref(null);
   let mainHeight=ref({})
   let inputValue=ref('');
-
   let totail=computed(()=>todoList.value.length);
   let done=computed(()=>todoList.value.reduce((pre,cur)=>cur.isDone?pre+1:pre,0))
   let editStyle=ref({});
@@ -62,7 +60,6 @@
     })
     inputValue.value='';
   }
-
   function getCoord(x,y,width){
     editStyle.value={
       top:typeof x==='number'?`${y}px`:x,
@@ -78,7 +75,18 @@
       editStyle.value.transform="translateX(-50%)"
     }
   }
-
+  const ListItemRef=ref(null);
+  function editHandler(){
+    getCoord(`-10%`,`50%`);
+    ListItemRef.value.forEach(element => {
+      if(element.id===store.toEditing.id){
+        // element.animationStyle.animationPlayState='running';
+        // element.isLiAcitive=false;
+        // element.isShowDeleteBtn=false;
+        element.editBlurEffect()
+      }
+    });
+  }
 </script>
 <style  scoped>
   .header-first{
@@ -92,6 +100,8 @@
     align-items: center;
     font-size: 1.5rem;
     box-sizing: border-box;
+    background-color: var(--theme-while);
+    color: var(--theme-black);
   }
   .header-left{
     display: flex;
@@ -113,6 +123,7 @@
     padding: .4rem;
     border: 1px solid var(--theme-very-very-gray);
     font-size: 1.2rem;
+    color: var(--theme-black);
   }
   .header-add-todo input:focus{
     border: 1px solid var(--theme-not-like-black);
@@ -121,6 +132,7 @@
     padding: .3rem 1.2rem;
     margin-left: 1rem;
     text-wrap: nowrap;
+    color: var(--theme-black);
   }
   
   .header-second{
@@ -133,6 +145,9 @@
     background-color: var(--theme-mdn-bar-color);
     text-wrap: nowrap;
   } 
+  .header-second span{
+    color: var(--theme-black);
+  }
   .header-second button{
     padding: 0 1rem;
     border: 1px solid var(--theme-red);
@@ -143,6 +158,8 @@
 
   ul{
     position: relative;
+    height: 100%;
+    background-color: var(--theme-while);
   }
 
   @media screen and (max-width: 1024px){

@@ -10,6 +10,7 @@ export const usetodoListStore = defineStore('todoList', {
             toEditing: {
                 id: '',
                 context: '',
+                focus: false,
             },
         }
     ),
