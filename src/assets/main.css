@@ -80,5 +80,61 @@ a {
     left: 0%;
     transform: translateX(-100%);
   }
-
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --theme-while: #1b1b1b;
+    --theme-mdn-bar-color: #333;
+    --theme-black: #ddd;
+    --theme-little-black: #fff;
+    --theme-not-like-black: #999;
+    --theme-gray: #666;
+  }
+}
+
+@keyframes move-up {
+  0% {
+    top: 100%;
+  }
+
+  20%,
+  100% {
+    top: 25%;
+  }
+}
+
+@keyframes move-down {
+
+  0%,
+  80% {
+    top: 25%;
+  }
+
+  100% {
+    top: 100%;
+  }
+}
+
+/* @keyframes ThemeGithub-move-up {
+  0% {
+    transform: translateY(0);
+  }
+
+  20%,
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes ThemeGithub-move-down {
+
+  0%,
+  80% {
+    transform: translateY(-125%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+} */

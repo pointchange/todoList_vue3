@@ -15,7 +15,11 @@
     <span>
       已完成 {{done}} / 共 {{totail}} 个
     </span>
-    <ThemeGithub class="header-second-center" style="display: none;"/>
+    <Transition name="themeGithub">
+      <ThemeGithub v-show="!store.tip.show" class="header-second-center" 
+     />
+    </Transition>
+    <Tip class="Tip"/>
     <div>
       <button @click="clearDoneHanler">清除已完成</button>
     </div>
@@ -38,6 +42,7 @@
   import Edit from './components/Edit.vue';
   import { usetodoListStore } from './store/todoList';
   import ThemeGithub from './components/ThemeGithub.vue';
+  import Tip from './components/Tip.vue';
   const store=usetodoListStore();
   const {todoList}=storeToRefs(store);
   const {addTodoHanler,clearDoneHanler}=store;
@@ -136,6 +141,7 @@
   }
   
   .header-second{
+    position: relative;
     padding: .2rem;
     display: flex;
     justify-content: space-between;
@@ -181,9 +187,14 @@
       width: 768px;
     }
   }
+  @media screen and (min-width: 480px) {
+    .header-second-center{
+      display: none;
+    }
+  }
   @media screen and (max-width: 480px){
     .header-second-center{
-      display: flex !important;
+      display: flex ;
     }
     header{
       width: 100%;
@@ -192,4 +203,23 @@
       display: none;
     }
   }
+  .Tip{
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+  }
+  .themeGithub-enter-active {
+    transition: transform 2s ease-in-out;
+  }
+  
+  .themeGithub-leave-active {
+    transition: transform 0.5s ease-in-out;
+  }
+  .themeGithub-enter-from,
+  .themeGithub-leave-to {
+    transform: translateY(-125%);
+  }
+
 </style>

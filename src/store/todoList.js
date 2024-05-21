@@ -12,6 +12,10 @@ export const usetodoListStore = defineStore('todoList', {
                 context: '',
                 focus: false,
             },
+            tip: {
+                title: '',
+                show: false,
+            }
         }
     ),
     getters: {
@@ -25,9 +29,17 @@ export const usetodoListStore = defineStore('todoList', {
                 isDone,
                 date
             });
+            this.tip = {
+                title: '添加成功',
+                show: true,
+            };
         },
         clearDoneHanler() {
             this.todoList = this.todoList.filter(item => !item.isDone);
+            this.tip = {
+                title: '清除成功',
+                show: true,
+            };
         },
         editTodoHanler() {
             this.todoList.forEach(item => {
@@ -35,14 +47,33 @@ export const usetodoListStore = defineStore('todoList', {
                     item.context = this.toEditing.context
                 }
             });
+            this.tip = {
+                title: '编辑成功',
+                show: true,
+            };
         },
         deleteTodoHanler() {
             this.todoList = this.todoList.filter(item => item.id !== this.toEditing.id);
+            this.tip = {
+                title: '删除成功',
+                show: true,
+            };
         },
         changeIsDone(id) {
             this.todoList.forEach(item => {
                 if (item.id === id) {
                     item.isDone = !item.isDone
+                    if (item.isDone) {
+                        this.tip = {
+                            title: '好！又完成了一项！为什么要说又？',
+                            show: true,
+                        };
+                    } else {
+                        this.tip = {
+                            title: '没关系！相信你很快会完成的。',
+                            show: true,
+                        };
+                    }
                 }
             });
         }
