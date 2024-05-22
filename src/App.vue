@@ -11,19 +11,26 @@
       </div>
       <ThemeGithub class="header-right"/>
     </div>
+
    <div class="header-second">
-    <span>
-      已完成 {{done}} / 共 {{totail}} 个
-    </span>
-    <Transition name="themeGithub">
-      <ThemeGithub v-show="!store.tip.show" class="header-second-center" 
-     />
-    </Transition>
+    <div class="header-second-firstChild">
+      <label>
+        <input ref="checkboxElement" type="checkbox" @change="changeHandler">
+        全选
+      </label>
+      <span>
+        已完成 {{done}} / 共 {{totail}} 个
+      </span>
+    </div>
+    <!-- <Transition v-show="!store.tip.show" name="themeGithub"> -->
+      <ThemeGithub  class="header-second-center"/>
+    <!-- </Transition> -->
     <Tip class="Tip"/>
     <div>
-      <button @click="clearDoneHanler">清除已完成</button>
+      <button @click="clearDone">清除已完成</button>
     </div>
    </div>
+   
   </header>
   <main :style="mainHeight">
     <ul>
@@ -45,7 +52,7 @@
   import Tip from './components/Tip.vue';
   const store=usetodoListStore();
   const {todoList}=storeToRefs(store);
-  const {addTodoHanler,clearDoneHanler}=store;
+  const {addTodoHanler,clearDoneHanler,checkedAll}=store;
   const header=ref(null);
   let mainHeight=ref({})
   let inputValue=ref('');
@@ -54,6 +61,13 @@
   let editStyle=ref({});
   onMounted(()=>{
     mainHeight.value.height=`${(1-header.value.clientHeight/window.innerHeight)*100}%`;
+    store.$patch({
+      tip:{
+        title: '双击可完成哦',
+        show: true,
+        color:'var(--theme-deep-purple)'
+      }
+    })
   })
   function addTodo(){
     if(inputValue.value=='')return;
@@ -92,9 +106,29 @@
       }
     });
   }
+  function changeHandler(e){
+    checkedAll(e.target.checked);
+    if(e.target.checked){
+      ListItemRef.value.forEach(element => {
+        element.pausedEffect()
+      });
+    }else{
+      ListItemRef.value.forEach(element => {
+        element.editBlurEffect()
+      });
+    }
+  }
+  let checkboxElement=ref(null);
+  function clearDone(){
+    clearDoneHanler();
+    if(totail.value===0){
+      checkboxElement.value.checked=false;
+    }
+  }
 </script>
 <style  scoped>
   .header-first{
+    position: relative;
     padding: .4rem;
     /* display: grid;
     grid-template-columns: 20% 60% 20%;
@@ -107,6 +141,7 @@
     box-sizing: border-box;
     background-color: var(--theme-while);
     color: var(--theme-black);
+    z-index: 10;
   }
   .header-left{
     display: flex;
@@ -208,7 +243,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 999;
+    /* z-index: 999; */
   }
   .themeGithub-enter-active {
     transition: transform 2s ease-in-out;
@@ -221,5 +256,9 @@
   .themeGithub-leave-to {
     transform: translateY(-125%);
   }
+
+  /* .header-second-firstChild label{
+    border: 1px solid var(--theme-very-very-gray);
+  } */
 
 </style>

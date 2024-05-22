@@ -16,6 +16,18 @@
 
   /* 绿 */
   --theme-green: limegreen;
+
+  /* 蓝 */
+  --theme-blue: #56a3f5;
+
+  /* 紫 */
+  --theme-purple: #76319e;
+
+  /* 暂存定义的变量 */
+  --theme-var: #000;
+
+  /* 沈紫 */
+  --theme-deep-purple: #410548;
 }
 
 html {

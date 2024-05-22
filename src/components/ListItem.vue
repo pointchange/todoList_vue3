@@ -90,9 +90,10 @@
     }
     let timeId=ref(0);
     function clickHandler(e){
-        isShowDeleteBtn.value=true;
-        isLiAcitive.value=true;
-        animationStyle.value.animationPlayState='paused';
+        // isShowDeleteBtn.value=true;
+        // isLiAcitive.value=true;
+        // animationStyle.value.animationPlayState='paused';
+        pausedEffect();
 
         clearTimeout(id.value);
         id.value=null;
@@ -123,6 +124,12 @@
         changeIsDone(props.id);
     }
 
+    function pausedEffect(){
+        isShowDeleteBtn.value=true;
+        isLiAcitive.value=true;
+        animationStyle.value.animationPlayState='paused';
+    }
+
     function editBlurEffect(){
         // props.getCoord(`-10%`,`50%`)
         animationStyle.value.animationPlayState='running';
@@ -130,6 +137,7 @@
         isShowDeleteBtn.value=false;
     }
     defineExpose({
+        pausedEffect,
         editBlurEffect,
         id:props.id,
     });
