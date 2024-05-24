@@ -118,7 +118,7 @@
                 timeId.value = 0; 
                 changeIsDone(props.id);
             }
-        }, 250)
+        }, 300)
         
         if(e.detail<2)return;
         changeIsDone(props.id);
@@ -148,6 +148,7 @@
         padding: .2rem .4rem;
         display: inline-flex;
         align-items: center;
+        flex-wrap: nowrap;
         color: var(--theme-little-black);
         text-wrap: nowrap;
         cursor: pointer;
@@ -160,6 +161,7 @@
         text-decoration: line-through;
     }
     .context{
+        text-wrap: nowrap;
         font-size: 1rem;
     }
     .date{

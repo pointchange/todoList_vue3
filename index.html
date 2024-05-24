@@ -5,11 +5,82 @@
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vite App</title>
+  <title>todoList</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+
+    .skeleton {
+      position: relative;
+      padding: 2rem;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      background-color: fff;
+    }
+
+    .skeleton div:first-child {
+      width: 100%;
+      height: 86px;
+      background-color: #ddd;
+    }
+
+    .skeleton div:last-child {
+      margin-top: 1rem;
+      width: 100%;
+      height: 10rem;
+      background-color: #ddd;
+    }
+
+    .skeleton div:first-child::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2rem;
+      height: 20rem;
+      content: '';
+      background-color: #fff;
+      animation: skeleton-animation 2s ease-in-out infinite;
+    }
+
+    @keyframes skeleton-animation {
+      0% {
+        left: 0;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .skeleton {
+        background-color: #1b1b1b;
+      }
+
+      .skeleton div {
+        background-color: #f9f9fb;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <div class="skeleton">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
   <script type="module" src="/src/main.js"></script>
 </body>
 

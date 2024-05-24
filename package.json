@@ -12,6 +12,7 @@
     "nanoid": "^5.0.7",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "vite-plugin-cdn-import": "^1.0.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {

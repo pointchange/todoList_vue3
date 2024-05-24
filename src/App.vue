@@ -61,13 +61,24 @@
   let editStyle=ref({});
   onMounted(()=>{
     mainHeight.value.height=`${(1-header.value.clientHeight/window.innerHeight)*100}%`;
-    store.$patch({
-      tip:{
-        title: '双击可完成哦',
-        show: true,
-        color:'var(--theme-deep-purple)'
-      }
-    })
+    store.tip.show=false;
+    if(totail.value){
+      store.$patch({
+        tip:{
+          title: '双击可完成哦',
+          show: true,
+          color:'var(--theme-deep-purple)'
+        }
+      })
+    }else{
+      store.$patch({
+        tip:{
+          title: '要做点什么，来！添加一个任务吧',
+          show: true,
+          color:'var(--theme-deep-purple)'
+        }
+      })
+    }
   })
   function addTodo(){
     if(inputValue.value=='')return;
@@ -121,6 +132,7 @@
   let checkboxElement=ref(null);
   function clearDone(){
     clearDoneHanler();
+    checkboxElement.value.checked=false;
     if(totail.value===0){
       checkboxElement.value.checked=false;
     }
@@ -257,8 +269,8 @@
     transform: translateY(-125%);
   }
 
-  /* .header-second-firstChild label{
-    border: 1px solid var(--theme-very-very-gray);
-  } */
+  .header-second-firstChild label{
+    color: var(--theme-black);
+  }
 
 </style>
