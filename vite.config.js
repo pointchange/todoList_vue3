@@ -37,5 +37,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: '/todoList_vue3/'
+  base: '/todoList_vue3/',
+  build: {
+    outDir: 'docs'
+  },
 })
