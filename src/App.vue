@@ -33,16 +33,19 @@
    
   </header>
   <main :style="mainHeight">
-    <ul>
+    <ul v-if="totail">
       <ListItem :getCoord="getCoord" :editHandler="editHandler" ref="ListItemRef"
        v-for="item in todoList" :key="item.id" v-bind="item" 
       />
     </ul>
+    <div class="empty" v-else>
+      空
+    </div>
   </main>
   <Edit :style="editStyle" :editHandler="editHandler"/>
 </template>
 <script setup>
-  import { nanoid } from 'nanoid';
+  import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js';
   import {computed, onMounted, ref}from 'vue'
   import { storeToRefs } from 'pinia';
   import ListItem from './components/ListItem.vue';
@@ -272,5 +275,14 @@
   .header-second-firstChild label{
     color: var(--theme-black);
   }
-
+  .empty{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10rem;
+    color: var(--theme-little-little-black);
+    background-color: var(--theme-while);
+  }
 </style>
